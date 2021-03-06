@@ -18,6 +18,7 @@ import com.absinthe.libchecker.database.entity.RuleEntity
 import com.absinthe.libchecker.databinding.FragmentLibComponentBinding
 import com.absinthe.libchecker.databinding.LayoutEmptyListBinding
 import com.absinthe.libchecker.extensions.addSystemBarPaddingAsync
+import com.absinthe.libchecker.extensions.logd
 import com.absinthe.libchecker.integrations.anywhere_.AnywhereManager
 import com.absinthe.libchecker.integrations.monkeyking.MonkeyKingManager
 import com.absinthe.libchecker.integrations.monkeyking.ShareCmpInfo
@@ -60,6 +61,7 @@ class ComponentsAnalysisFragment : BaseDetailFragment<FragmentLibComponentBindin
 
         viewModel.apply {
             componentsMap[adapter.type]?.observe(viewLifecycleOwner, { componentList ->
+                logd("LCDEBUG", "componentsMap#observe")
                 if (componentList.isEmpty()) {
                     emptyLayoutBinding.text.text = getString(R.string.empty_list)
                 } else {
@@ -68,6 +70,7 @@ class ComponentsAnalysisFragment : BaseDetailFragment<FragmentLibComponentBindin
                         var chip: LibChip?
                         var rule: RuleEntity?
 
+                        logd("LCDEBUG", "componentsMap#observe for loop")
                         for (item in componentList) {
                             rule = LCAppUtils.getRuleWithRegex(item.componentName, adapter.type)
                             chip = null

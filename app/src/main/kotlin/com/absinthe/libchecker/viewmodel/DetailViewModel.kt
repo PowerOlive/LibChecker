@@ -96,6 +96,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
 
     fun initComponentsData(packageName: String) =
         viewModelScope.launch(Dispatchers.IO) {
+            logd("LCDEBUG", "initComponentsData")
             val context: Context = getApplication<LibCheckerApp>()
 
             val pmFlag = if (LCAppUtils.atLeastN()) {
@@ -145,6 +146,7 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
                     }
                 }
             } catch (e: Exception) {
+                logd("LCDEBUG", "initComponentsData exception: $e")
                 e.printStackTrace()
             }
         }
