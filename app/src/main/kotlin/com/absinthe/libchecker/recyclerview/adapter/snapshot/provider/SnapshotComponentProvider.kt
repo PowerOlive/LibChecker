@@ -2,6 +2,8 @@ package com.absinthe.libchecker.recyclerview.adapter.snapshot.provider
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -74,7 +76,13 @@ class SnapshotComponentProvider(val lifecycleScope: LifecycleCoroutineScope) : B
                         visibility = View.VISIBLE
 
                         if (!GlobalValues.isColorfulIcon.valueUnsafe) {
-                            chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_black_1000))
+                            val icon = chipIcon
+                            icon?.let {
+                                it.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+                                chipIcon = it
+                            }
+                        } else if (IconResMap.isSingleColorIcon(it.iconIndex)) {
+                            chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(context, android.R.color.black))
                         }
                     }
                 } ?: let { chip.isGone = true }
